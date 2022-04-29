@@ -1,3 +1,4 @@
+fail_fast: false
 repos:
 -   repo: local
     hooks:
