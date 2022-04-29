@@ -14,3 +14,17 @@ repos:
         entry: poetry run flake8
         language: system
         types: [python]
+-   repo: local
+    hooks:
+    -   id: isort
+        name: isort
+        entry: poetry run isort .
+        language: system
+        types: [python]
+-   repo: local
+    hooks:
+    -   id: mypy
+        name: mypy
+        entry: poetry run mypy .
+        language: system
+        types: [python]
