@@ -181,7 +181,8 @@ class GeneralGaussianSmoother(Smoother):
 
         Returns
         -------
-        None
+        sliding_window : np.array
+            The sliding window.
 
         Raises
         ------
@@ -279,7 +280,8 @@ class ExponentialDecaySmoother(Smoother):
 
         Returns
         -------
-        None
+        sliding_window : np.array
+            The sliding window.
         """
         sliding_window = self.strength ** (
             np.abs(np.arange(self.window) - self.peak) ** self.exponent
