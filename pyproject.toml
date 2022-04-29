@@ -8,6 +8,7 @@ authors = ["Garve <xgarve@gmail.com>"]
 python = "^3.9"
 scikit-learn = "^1.0.2"
 numpy = "^1.22.3"
+pre-commit = "^2.18.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
