@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "scikit-mmm"
+version = "0.1.0"
+description = "A package to compute a marketing mix model."
+authors = ["Garve <xgarve@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scikit-learn = "^1.0.2"
+numpy = "^1.22.3"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+flake8 = "^4.0.1"
+mypy = "^0.950"
+pytest = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
