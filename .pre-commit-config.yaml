@@ -29,3 +29,4 @@ repos:
         language: system
         types: [python]
         args: [--no-strict-optional, --ignore-missing-imports]
+        pass_filenames: false
