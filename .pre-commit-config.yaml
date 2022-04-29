@@ -3,6 +3,6 @@ repos:
     hooks:
     -   id: black
         name: black
-        entry: black
+        entry: poetry run black
         language: system
         types: [python]
