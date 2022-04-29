@@ -28,3 +28,4 @@ repos:
         entry: poetry run mypy .
         language: system
         types: [python]
+        args: [--no-strict-optional, --ignore-missing-imports]
