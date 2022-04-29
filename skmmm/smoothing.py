@@ -274,7 +274,7 @@ class ExponentialDecaySmoother(Smoother):
         self.peak = peak
         self.exponent = exponent
 
-    def _set_sliding_window(self) -> np.ndarray:
+    def _get_sliding_window(self) -> np.ndarray:
         """
         Calculate the sliding window.
 
