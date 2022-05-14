@@ -1,7 +1,7 @@
 import pytest
 from sklearn.utils.estimator_checks import check_estimator
 
-from mamimo.smoothing import ExponentialDecaySmoother, GeneralGaussianSmoother
+from mamimo.carryover import ExponentialDecaySmoother, GeneralGaussianSmoother
 
 
 @pytest.mark.parametrize(
