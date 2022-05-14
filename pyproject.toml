@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mamimo"
-version = "0.1.0"
+version = "0.1.2"
 description = "A package to compute a marketing mix model."
 authors = ["Garve <xgarve@gmail.com>"]
 
