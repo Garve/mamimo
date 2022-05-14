@@ -1,7 +1,7 @@
 import pytest
 from sklearn.utils.estimator_checks import check_estimator
 
-from skmmm.saturation import (
+from mamimo.saturation import (
     AdbudgSaturation,
     BoxCoxSaturation,
     ExponentialSaturation,

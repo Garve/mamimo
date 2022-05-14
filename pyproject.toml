@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "scikit-mmm"
+name = "mamimo"
 version = "0.1.0"
 description = "A package to compute a marketing mix model."
 authors = ["Garve <xgarve@gmail.com>"]
