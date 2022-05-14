@@ -1,5 +1,16 @@
-from skmmm import __version__
+import pytest
+from sklearn.utils.estimator_checks import check_estimator
+
+from skmmm.smoothing import ExponentialDecaySmoother, GeneralGaussianSmoother
 
 
-def test_version():
-    assert __version__ == "0.1.0"
+@pytest.mark.parametrize(
+    "estimator",
+    [
+        ExponentialDecaySmoother(),
+        GeneralGaussianSmoother(),
+    ],
+)
+def test_check_estimator(estimator):
+    """Test if check_estimator passes."""
+    check_estimator(estimator)
