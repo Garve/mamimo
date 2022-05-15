@@ -6,6 +6,7 @@ from sklearn.pipeline import make_pipeline
 
 from mamimo.carryover import ExponentialCarryover
 from mamimo.saturation import ExponentialSaturation
+from mamimo.time_utils import add_date_indicators
 
 
 def load_fake_mmm():
@@ -37,13 +38,17 @@ def load_fake_mmm():
     adstock_data["TV"] = tv_pipe.fit_transform(adstock_data[["TV"]])
     adstock_data["Radio"] = radio_pipe.fit_transform(adstock_data[["Radio"]])
     adstock_data["Banners"] = banners_pipe.fit_transform(adstock_data[["Banners"]])
+    adstock_data = adstock_data.pipe(
+        add_date_indicators, some_special_date=["2020-01-05"]
+    )
 
     sales = (
         10000 * adstock_data["TV"]
         + 8000 * adstock_data["Radio"]
         + 14000 * adstock_data["Banners"]
-        + 1000 * np.sin(np.arange(200) * 2 * np.pi / 7)
-        + 40 * np.arange(200)
+        + 1000 * np.sin(np.arange(200) * 2 * np.pi / 52)
+        + 40 * np.arange(200) ** 1.2
+        + 5000 * adstock_data["some_special_date"]
         + 500 * np.random.randn(200)
     )
 

@@ -1,7 +1,11 @@
 """Deal with time features in dataframes."""
 
+from __future__ import annotations
+
 import numpy as np
 import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils.validation import check_array, check_is_fitted
 
 
 def add_date_indicators(df: pd.DataFrame, **kwargs) -> pd.DataFrame:
@@ -173,3 +177,76 @@ def add_time_features(
         .pipe(_add_month)
         .pipe(_add_year)
     )
+
+
+class PowerTrend(BaseEstimator, TransformerMixin):
+    """
+    Apply a power function to a trend.
+
+    This takes an x and computes x ^ power from it.
+
+    Parameters
+    ----------
+    power : float, default=1.0
+        The power.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> X = np.array([[1], [2], [3]])
+    >>> PowerTrend(power=1.5).fit_transform(X)
+    array([[1.        ],
+           [2.82842712],
+           [5.19615242]])
+
+    """
+
+    def __init__(self, power: float = 1.0) -> None:
+        """Initialize."""
+        self.power = power
+
+    def fit(self, X: np.ndarray, y: None = None) -> PowerTrend:
+        """
+        Fit the transformer.
+
+        This takes data and just raises it to `power`.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Data to be transformed. This is usually just an integer range from a to b.
+
+        y : Ignored
+            Not used, present here for API consistency by convention.
+
+        Returns
+        -------
+        PowerTrend
+            Fitted transformer.
+
+        """
+        X = check_array(X)
+        self._check_n_features(X, reset=True)
+
+        return self
+
+    def transform(self, X: np.ndarray) -> np.ndarray:
+        """
+        Apply the power function.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Data to be transformed. This is usually just an integer range from a to b.
+
+        Returns
+        -------
+        np.ndarray
+            Data with power trend applied.
+
+        """
+        check_is_fitted(self)
+        X = check_array(X)
+        self._check_n_features(X, reset=False)
+
+        return X**self.power
