@@ -44,6 +44,13 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
     positive : bool, default=False
         When set to True, forces the coefficients to be positive.
 
+    monotone_constraints : list (optional), default=None
+        A list containing as many numbers as there are features. The numbers should be
+        - -1 to indicate that the coefficient in this position should be negative
+        - 0 if the coefficient is unrestricted, and
+        - 1 if the coefficient should be positive.
+
+
     Attributes
     ----------
     coef_ : np.ndarray of shape (n_features,)
