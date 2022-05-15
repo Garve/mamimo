@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.pipeline import make_pipeline
 
-from mamimo.carryover import ExponentialDecaySmoother
+from mamimo.carryover import ExponentialCarryover
 from mamimo.saturation import ExponentialSaturation
 
 
@@ -26,11 +26,11 @@ def load_fake_mmm():
 
     adstock_data = data.copy()
     tv_pipe = make_pipeline(
-        ExponentialDecaySmoother(window=4, strength=0.5),
+        ExponentialCarryover(window=4, strength=0.5),
         ExponentialSaturation(exponent=0.0001),
     )
     radio_pipe = make_pipeline(
-        ExponentialDecaySmoother(window=2, strength=0.2),
+        ExponentialCarryover(window=2, strength=0.2),
         ExponentialSaturation(exponent=0.0001),
     )
     banners_pipe = make_pipeline(ExponentialSaturation(exponent=0.0001))

@@ -11,7 +11,7 @@ from sklearn.utils import check_array
 from sklearn.utils.validation import check_is_fitted
 
 
-class Smoother(BaseEstimator, TransformerMixin, ABC):
+class Carryover(BaseEstimator, TransformerMixin, ABC):
     """
     Smooth the columns of an array by applying a convolution.
 
@@ -53,7 +53,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
 
         """
 
-    def fit(self, X: np.ndarray, y: None = None) -> Smoother:
+    def fit(self, X: np.ndarray, y: None = None) -> Carryover:
         """
         Fit the estimator.
 
@@ -69,7 +69,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
 
         Returns
         -------
-        GeneralGaussianSmoother : Smoother
+        Carryover
             Fitted transformer.
 
         """
@@ -109,7 +109,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
         return convolution
 
 
-class GeneralGaussianSmoother(Smoother):
+class GeneralGaussianCarryover(Carryover):
     """
     Smoothes time series data with a Gaussian window.
 
@@ -140,7 +140,7 @@ class GeneralGaussianSmoother(Smoother):
     --------
     >>> import numpy as np
     >>> X = np.array([0, 0, 0, 1, 0, 0, 0]).reshape(-1, 1)
-    >>> GeneralGaussianSmoother().fit_transform(X)
+    >>> GeneralGaussianCarryover().fit_transform(X)
     array([[0.],
            [0.],
            [0.],
@@ -149,7 +149,7 @@ class GeneralGaussianSmoother(Smoother):
            [0.],
            [0.]])
 
-    >>> GeneralGaussianSmoother(window=5, p=1, sig=1).fit_transform(X)
+    >>> GeneralGaussianCarryover(window=5, p=1, sig=1).fit_transform(X)
     array([[0.        ],
            [0.05448868],
            [0.24420134],
@@ -158,7 +158,7 @@ class GeneralGaussianSmoother(Smoother):
            [0.05448868],
            [0.        ]])
 
-    >>> GeneralGaussianSmoother(window=7, tails="right").fit_transform(X)
+    >>> GeneralGaussianCarryover(window=7, tails="right").fit_transform(X)
     array([[0.        ],
            [0.        ],
            [0.        ],
@@ -213,7 +213,7 @@ class GeneralGaussianSmoother(Smoother):
         return sliding_window
 
 
-class ExponentialDecaySmoother(Smoother):
+class ExponentialCarryover(Carryover):
     """
     Smoothes time series data with an exponential window.
 
@@ -243,7 +243,7 @@ class ExponentialDecaySmoother(Smoother):
     --------
     >>> import numpy as np
     >>> X = np.array([0, 0, 0, 1, 0, 0, 0]).reshape(-1, 1)
-    >>> ExponentialDecaySmoother().fit_transform(X)
+    >>> ExponentialCarryover().fit_transform(X)
     array([[0.],
            [0.],
            [0.],
@@ -252,7 +252,7 @@ class ExponentialDecaySmoother(Smoother):
            [0.],
            [0.]])
 
-    >>> ExponentialDecaySmoother(window=3, strength=0.5).fit_transform(X)
+    >>> ExponentialCarryover(window=3, strength=0.5).fit_transform(X)
     array([[0.        ],
            [0.        ],
            [0.        ],
@@ -261,7 +261,7 @@ class ExponentialDecaySmoother(Smoother):
            [0.14285714],
            [0.        ]])
 
-    >>> ExponentialDecaySmoother(window=3, strength=0.5, peak=1).fit_transform(X)
+    >>> ExponentialCarryover(window=3, strength=0.5, peak=1).fit_transform(X)
     array([[0.  ],
            [0.  ],
            [0.  ],

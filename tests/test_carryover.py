@@ -1,14 +1,16 @@
+"""Test carryover."""
+
 import pytest
 from sklearn.utils.estimator_checks import check_estimator
 
-from mamimo.carryover import ExponentialDecaySmoother, GeneralGaussianSmoother
+from mamimo.carryover import ExponentialCarryover, GeneralGaussianCarryover
 
 
 @pytest.mark.parametrize(
     "estimator",
     [
-        ExponentialDecaySmoother(),
-        GeneralGaussianSmoother(),
+        ExponentialCarryover(),
+        GeneralGaussianCarryover(),
     ],
 )
 def test_check_estimator(estimator):
