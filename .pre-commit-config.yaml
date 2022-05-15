@@ -30,3 +30,10 @@ repos:
         types: [python]
         args: [--no-strict-optional, --ignore-missing-imports]
         pass_filenames: false
+-   repo: local
+    hooks:
+    -   id: pydocstyle
+        name: pydocstyle
+        entry: poetry run pydocstyle .
+        language: system
+        types: [python]

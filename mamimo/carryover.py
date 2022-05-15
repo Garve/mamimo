@@ -29,6 +29,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
             the zero-padding.
             - "same": The output is the same size as the first input, centered with
             respect to the 'full' output.
+
     """
 
     def __init__(
@@ -49,6 +50,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
         -------
         sliding_window : np.array
             The sliding window.
+
         """
 
     def fit(self, X: np.ndarray, y: None = None) -> Smoother:
@@ -69,6 +71,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
         -------
         GeneralGaussianSmoother : Smoother
             Fitted transformer.
+
         """
         X = check_array(X)
         self._check_n_features(X, reset=True)
@@ -92,6 +95,7 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
         -------
         np.ndarray
             The input dataframe with an additional column for special dates.
+
         """
         check_is_fitted(self)
         X = check_array(X)
@@ -107,6 +111,8 @@ class Smoother(BaseEstimator, TransformerMixin, ABC):
 
 class GeneralGaussianSmoother(Smoother):
     """
+    Smoothes time series data with a Gaussian window.
+
     Smooth the columns of an array by applying a convolution with a generalized
     Gaussian curve.
 
@@ -160,6 +166,7 @@ class GeneralGaussianSmoother(Smoother):
            [0.34600076],
            [0.0772032 ],
            [0.00633722]])
+
     """
 
     def __init__(
@@ -188,6 +195,7 @@ class GeneralGaussianSmoother(Smoother):
         ------
         ValueError
             If the provided value for `tails` is not "left", "right" or "both".
+
         """
         sliding_window = np.exp(
             -0.5
@@ -207,6 +215,8 @@ class GeneralGaussianSmoother(Smoother):
 
 class ExponentialDecaySmoother(Smoother):
     """
+    Smoothes time series data with an exponential window.
+
     Smooth the columns of an array by applying a convolution with a exponentially
     decaying curve. This class can be used for modelling carry over effects in
     marketing mix models.
@@ -259,6 +269,7 @@ class ExponentialDecaySmoother(Smoother):
            [0.5 ],
            [0.25],
            [0.  ]])
+
     """
 
     def __init__(
@@ -282,6 +293,7 @@ class ExponentialDecaySmoother(Smoother):
         -------
         sliding_window : np.array
             The sliding window.
+
         """
         sliding_window = self.strength ** (
             np.abs(np.arange(self.window) - self.peak) ** self.exponent

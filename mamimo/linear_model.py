@@ -1,3 +1,5 @@
+"""Perform the actual regression using linear models."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -17,6 +19,7 @@ from sklearn.utils.validation import (
 class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
     """
     Base class for regressors relying on scipy's minimze method.
+
     Derive a class from this one and give it the function to be minimized.
 
     Parameters
@@ -53,6 +56,7 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
     -----
     This implementation uses scipy.optimize.minimize, see
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html.
+
     """
 
     def __init__(
@@ -77,8 +81,9 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
         self, X: np.ndarray, y: np.ndarray, sample_weight: np.ndarray
     ) -> Tuple[Callable[[np.ndarray], float], Callable[[np.ndarray], np.ndarray]]:
         """
-        Produce the loss function to be minimized, and its gradient to speed up
-        computations.
+        Produce the loss function to be minimized.
+
+        Also outputs its gradient to speed up computations.
 
         Parameters
         ----------
@@ -98,6 +103,7 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
 
         grad_loss : Callable[[np.ndarray], np.ndarray]
             The gradient of the loss function. Speeds up finding the minimum.
+
         """
 
     def _loss_regularize(self, loss):
@@ -143,6 +149,7 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
         Returns
         -------
         Fitted regressor.
+
         """
         X_, grad_loss, loss = self._prepare_inputs(X, sample_weight, y)
 
@@ -210,6 +217,7 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
         -------
         y : np.ndarray, shape (n_samples,)
             The predicted values.
+
         """
         check_is_fitted(self)
         X = check_array(X)
@@ -305,9 +313,9 @@ class LADRegression(BaseScipyMinimizeRegressor):
 
 class QuantileRegression(BaseScipyMinimizeRegressor):
     """
-    Compute Quantile Regression. This can be used for computing confidence intervals
-    of linear regressions.
+    Compute Quantile Regression.
 
+    This can be used for computing confidence intervals of linear regressions.
     `QuantileRegression` fits a linear model to minimize a weighted residual sum of
     absolute deviations between the observed targets in the dataset and the targets
     predicted by the linear approximation, i.e.
@@ -378,6 +386,7 @@ class QuantileRegression(BaseScipyMinimizeRegressor):
     >>> l = QuantileRegression(quantile=0.8).fit(X, y)
     >>> l.coef_
     array([-1.,  2., -3.,  4.])
+
     """
 
     def __init__(
@@ -441,6 +450,7 @@ class QuantileRegression(BaseScipyMinimizeRegressor):
         Returns
         -------
         Fitted regressor.
+
         """
         if 0 <= self.quantile <= 1:
             super().fit(X, y, sample_weight)
@@ -452,8 +462,7 @@ class QuantileRegression(BaseScipyMinimizeRegressor):
 
 class ImbalancedLinearRegression(BaseScipyMinimizeRegressor):
     """
-    Linear regression where overestimating is `overestimation_punishment_factor` times
-    worse than underestimating.
+    Linear regression where over and underestimating are treated differently.
 
     A value of `overestimation_punishment_factor=5` implies that overestimations by the
     model are penalized with a factor of 5 while underestimations have a default factor

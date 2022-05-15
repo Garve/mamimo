@@ -15,6 +15,7 @@ class Saturation(BaseEstimator, TransformerMixin, ABC):
     def fit(self, X: np.ndarray, y: None = None) -> Saturation:
         """
         Fit the transformer.
+
         In this special case, nothing is done.
 
         Parameters
@@ -29,6 +30,7 @@ class Saturation(BaseEstimator, TransformerMixin, ABC):
         -------
         Saturation
             Fitted transformer.
+
         """
         X = check_array(X)
         self._check_n_features(X, reset=True)
@@ -48,6 +50,7 @@ class Saturation(BaseEstimator, TransformerMixin, ABC):
         -------
         np.ndarray
             Data with saturation effect applied.
+
         """
         check_is_fitted(self)
         X = check_array(X)
@@ -63,6 +66,7 @@ class Saturation(BaseEstimator, TransformerMixin, ABC):
 class BoxCoxSaturation(Saturation):
     """
     Apply the Box-Cox saturation.
+
     The formula is ((x + shift) ** exponent-1) / exponent if exponent!=0,
     else ln(x+shift).
 
@@ -82,6 +86,7 @@ class BoxCoxSaturation(Saturation):
     array([[ 0.82842712, 61.27716808],
            [ 1.46410162, 61.27716808],
            [ 2.        , 61.27716808]])
+
     """
 
     def __init__(self, exponent: float = 1.0, shift: float = 1.0) -> None:
@@ -100,6 +105,7 @@ class BoxCoxSaturation(Saturation):
 class AdbudgSaturation(Saturation):
     """
     Apply the Adbudg saturation.
+
     The formula is x ** exponent / (denominator_shift + x ** exponent).
 
     Parameters
@@ -118,6 +124,7 @@ class AdbudgSaturation(Saturation):
     array([[0.5       , 0.999001  ],
            [0.66666667, 0.999001  ],
            [0.75      , 0.999001  ]])
+
     """
 
     def __init__(self, exponent: float = 1.0, denominator_shift: float = 1.0) -> None:
@@ -133,6 +140,7 @@ class AdbudgSaturation(Saturation):
 class HillSaturation(Saturation):
     """
     Apply the Hill saturation.
+
     The formula is 1 / (1 + (half_saturation / x) ** exponent).
 
     Parameters
@@ -151,6 +159,7 @@ class HillSaturation(Saturation):
     array([[0.5       , 0.999001  ],
            [0.66666667, 0.999001  ],
            [0.75      , 0.999001  ]])
+
     """
 
     def __init__(self, exponent: float = 1.0, half_saturation: float = 1.0) -> None:
@@ -167,6 +176,7 @@ class HillSaturation(Saturation):
 class ExponentialSaturation(Saturation):
     """
     Apply exponential saturation.
+
     The formula is 1 - exp(-exponent * x).
 
     Parameters
@@ -182,6 +192,7 @@ class ExponentialSaturation(Saturation):
     array([[0.63212056, 1.        ],
            [0.86466472, 1.        ],
            [0.95021293, 1.        ]])
+
     """
 
     def __init__(self, exponent: float = 1.0) -> None:

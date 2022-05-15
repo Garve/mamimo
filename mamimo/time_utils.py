@@ -7,6 +7,7 @@ import pandas as pd
 def add_date_indicators(df: pd.DataFrame, **kwargs) -> pd.DataFrame:
     """
     Enrich a pandas dataframes with a new column indicating if there is a special date.
+
     This new column will contain a one for each date specified in the `dates` keyword,
     zero otherwise.
 
@@ -45,6 +46,7 @@ def add_date_indicators(df: pd.DataFrame, **kwargs) -> pd.DataFrame:
     2020-01-02  4                     1             0             0
     2020-01-03  5                     0             0             0
     2020-01-04  6                     0             0             0
+
     """
     return df.assign(
         **{name: df.index.isin(dates).astype(int) for name, dates in kwargs.items()}
@@ -65,7 +67,9 @@ def add_time_features(
     year: bool = False,
 ) -> pd.DataFrame:
     """
-    Enrich pandas dataframes with new columns which are easy derivations from its
+    Enrich pandas dataframes with new time feaure columns.
+
+    These features are easy derivations from the dataframe's
     DatetimeIndex, such as the day of week or the month.
 
     Parameters
@@ -118,6 +122,7 @@ def add_time_features(
     1988-08-08  a             8      8  1988
     2000-01-01  b             1      1  2000
     1950-12-31  c            31     12  1950
+
     """
 
     def _add_second(df: pd.DataFrame) -> pd.DataFrame:
