@@ -25,7 +25,6 @@ def load_fake_mmm():
         index=pd.date_range(start="2018-01-01", periods=200, freq="w"),
     ).clip(0, np.inf)
 
-    adstock_data = data.copy()
     tv_pipe = make_pipeline(
         ExponentialCarryover(window=4, strength=0.5),
         ExponentialSaturation(exponent=0.0001),
@@ -35,11 +34,16 @@ def load_fake_mmm():
         ExponentialSaturation(exponent=0.0001),
     )
     banners_pipe = make_pipeline(ExponentialSaturation(exponent=0.0001))
+    date_carryover = ExponentialCarryover(window=10, strength=0.6)
+
+    adstock_data = data.copy().pipe(
+        add_date_indicators, some_special_date=["2020-01-05"]
+    )
     adstock_data["TV"] = tv_pipe.fit_transform(adstock_data[["TV"]])
     adstock_data["Radio"] = radio_pipe.fit_transform(adstock_data[["Radio"]])
     adstock_data["Banners"] = banners_pipe.fit_transform(adstock_data[["Banners"]])
-    adstock_data = adstock_data.pipe(
-        add_date_indicators, some_special_date=["2020-01-05"]
+    adstock_data["some_special_date"] = date_carryover.fit_transform(
+        adstock_data[["some_special_date"]]
     )
 
     sales = (
@@ -48,7 +52,7 @@ def load_fake_mmm():
         + 14000 * adstock_data["Banners"]
         + 1000 * np.sin(np.arange(200) * 2 * np.pi / 52)
         + 40 * np.arange(200) ** 1.2
-        + 5000 * adstock_data["some_special_date"]
+        + 80000 * adstock_data["some_special_date"]
         + 500 * np.random.randn(200)
     )
 
