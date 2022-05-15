@@ -2,10 +2,16 @@
 
 from __future__ import annotations
 
+from typing import List, Optional
+
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.utils.validation import check_array, check_is_fitted
+from sklearn.utils.validation import (
+    _check_feature_names_in,
+    check_array,
+    check_is_fitted,
+)
 
 
 def add_date_indicators(df: pd.DataFrame, **kwargs) -> pd.DataFrame:
@@ -250,3 +256,22 @@ class PowerTrend(BaseEstimator, TransformerMixin):
         self._check_n_features(X, reset=False)
 
         return X**self.power
+
+    def get_feature_names_out(self, input_features: Optional[List] = None):
+        """
+        Get the output feature names.
+
+        Parameters
+        ----------
+        input_features : list (optional), default0None
+            Input feature names.
+
+        Returns
+        -------
+        np.ndarray
+            Output feature names.
+
+        """
+        input_features = _check_feature_names_in(self, input_features)
+
+        return np.array(input_features, dtype=object)

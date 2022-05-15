@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import List, Optional
 
 import numpy as np
 from scipy.signal import convolve2d
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils import check_array
-from sklearn.utils.validation import check_is_fitted
+from sklearn.utils.validation import _check_feature_names_in, check_is_fitted
 
 
 class Carryover(BaseEstimator, TransformerMixin, ABC):
@@ -107,6 +108,25 @@ class Carryover(BaseEstimator, TransformerMixin, ABC):
             convolution = convolution[: -self.window + 1]
 
         return convolution
+
+    def get_feature_names_out(self, input_features: Optional[List] = None):
+        """
+        Get the output feature names.
+
+        Parameters
+        ----------
+        input_features : list (optional), default0None
+            Input feature names.
+
+        Returns
+        -------
+        np.ndarray
+            Output feature names.
+
+        """
+        input_features = _check_feature_names_in(self, input_features)
+
+        return np.array(input_features, dtype=object)
 
 
 class GeneralGaussianCarryover(Carryover):
