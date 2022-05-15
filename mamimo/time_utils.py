@@ -242,7 +242,7 @@ class PowerTrend(BaseEstimator, TransformerMixin):
 
         Parameters
         ----------
-        X : np.ndarray
+        X : np.ndarray of shape (n_samples, n_features)
             Data to be transformed. This is usually just an integer range from a to b.
 
         Returns
