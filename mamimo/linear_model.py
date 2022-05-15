@@ -50,7 +50,6 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
         - 0 if the coefficient is unrestricted, and
         - 1 if the coefficient should be positive.
 
-
     Attributes
     ----------
     coef_ : np.ndarray of shape (n_features,)
@@ -271,6 +270,12 @@ class LADRegression(BaseScipyMinimizeRegressor):
     positive : bool, default=False
         When set to True, forces the coefficients to be positive.
 
+    monotone_constraints : list (optional), default=None
+        A list containing as many numbers as there are features. The numbers should be
+        - -1 to indicate that the coefficient in this position should be negative
+        - 0 if the coefficient is unrestricted, and
+        - 1 if the coefficient should be positive.
+
     Attributes
     ----------
     coef_ : np.ndarray of shape (n_features,)
@@ -358,6 +363,12 @@ class QuantileRegression(BaseScipyMinimizeRegressor):
     positive : bool, default=False
         When set to True, forces the coefficients to be positive.
 
+    monotone_constraints : list (optional), default=None
+        A list containing as many numbers as there are features. The numbers should be
+        - -1 to indicate that the coefficient in this position should be negative
+        - 0 if the coefficient is unrestricted, and
+        - 1 if the coefficient should be positive.
+
     quantile : float, between 0 and 1, default=0.5
         The line output by the model will have a share of approximately `quantile`
         data points under it. A value of `quantile=1` outputs a line that is above
@@ -403,10 +414,13 @@ class QuantileRegression(BaseScipyMinimizeRegressor):
         fit_intercept: bool = True,
         copy_X: bool = True,
         positive: bool = False,
+        monotone_constraints: Optional[List[int]] = None,
         quantile: float = 0.5,
     ) -> None:
         """Initialize."""
-        super().__init__(alpha, l1_ratio, fit_intercept, copy_X, positive)
+        super().__init__(
+            alpha, l1_ratio, fit_intercept, copy_X, positive, monotone_constraints
+        )
         self.quantile = quantile
 
     def _get_objective(
@@ -509,6 +523,12 @@ class ImbalancedLinearRegression(BaseScipyMinimizeRegressor):
     positive : bool, default=False
         When set to True, forces the coefficients to be positive.
 
+    monotone_constraints : list (optional), default=None
+        A list containing as many numbers as there are features. The numbers should be
+        - -1 to indicate that the coefficient in this position should be negative
+        - 0 if the coefficient is unrestricted, and
+        - 1 if the coefficient should be positive.
+
     overestimation_punishment_factor : float, default=1
         Factor to punish overestimations more (if the value is larger than 1) or less
         (if the value is between 0 and 1).
@@ -534,11 +554,13 @@ class ImbalancedLinearRegression(BaseScipyMinimizeRegressor):
     >>> y = X @ np.array([1, 2, 3, 4]) + 2*np.random.randn(100)
     >>> over_bad = ImbalancedLinearRegression(overestimation_punishment_factor=50)
     >>> over_bad.fit(X, y)
+    ImbalancedLinearRegression(overestimation_punishment_factor=50)
     >>> over_bad.coef_
     array([0.36267036, 1.39526844, 3.4247146 , 3.93679175])
 
     >>> under_bad = ImbalancedLinearRegression(overestimation_punishment_factor=0.01)
     >>> under_bad.fit(X, y)
+    ImbalancedLinearRegression(overestimation_punishment_factor=0.01)
     >>> under_bad.coef_
     array([0.73519586, 1.28698197, 2.61362614, 4.35989806])
 
@@ -551,10 +573,13 @@ class ImbalancedLinearRegression(BaseScipyMinimizeRegressor):
         fit_intercept: bool = True,
         copy_X: bool = True,
         positive: bool = False,
+        monotone_constraints: Optional[List[int]] = None,
         overestimation_punishment_factor: float = 1.0,
     ) -> None:
         """Initialize."""
-        super().__init__(alpha, l1_ratio, fit_intercept, copy_X, positive)
+        super().__init__(
+            alpha, l1_ratio, fit_intercept, copy_X, positive, monotone_constraints
+        )
         self.overestimation_punishment_factor = overestimation_punishment_factor
 
     def _get_objective(
@@ -615,6 +640,12 @@ class LinearRegression(BaseScipyMinimizeRegressor):
     positive : bool, default=False
         When set to True, forces the coefficients to be positive.
 
+    monotone_constraints : list (optional), default=None
+        A list containing as many numbers as there are features. The numbers should be
+        - -1 to indicate that the coefficient in this position should be negative
+        - 0 if the coefficient is unrestricted, and
+        - 1 if the coefficient should be positive.
+
     Attributes
     ----------
     coef_ : np.ndarray of shape (n_features,)
@@ -637,6 +668,10 @@ class LinearRegression(BaseScipyMinimizeRegressor):
     >>> lr = LinearRegression().fit(X, y)
     >>> lr.coef_
     array([0.73202377, 1.75186186, 2.92983272, 3.96578532])
+
+    >>> lr = lr = LinearRegression(monotone_constraints=[1, 0, -1, -1]).fit(X, y)
+    >>> lr.coef_
+    array([1.37824805, 2.57277907, 0.        , 0.        ])
 
     """
 
