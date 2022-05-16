@@ -1,12 +1,17 @@
 """Analyze trained marketing mix models."""
 
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
 
 
-def breakdown(model: Any, X: pd.DataFrame, y: np.ndarray):
+def breakdown(
+    model: Any,
+    X: pd.DataFrame,
+    y: np.ndarray,
+    group_channels: Optional[Dict[str, List[str]]] = None,
+):
     """
     Compute the contributions for each channel.
 
@@ -22,6 +27,9 @@ def breakdown(model: Any, X: pd.DataFrame, y: np.ndarray):
 
     y : np.ndarray, 1-dimensional
         The training labels.
+
+    group_channels : Dict[str, List[str]], default=None
+        Create new channels by grouping (i.e. summing) the channels in the input.
 
     Returns
     -------
@@ -46,5 +54,11 @@ def breakdown(model: Any, X: pd.DataFrame, y: np.ndarray):
     adjusted_breakdown = unadjusted_breakdown.div(
         unadjusted_breakdown.sum(axis=1), axis=0
     ).mul(y, axis=0)
+
+    if group_channels is not None:
+        for new_channel, old_channels in group_channels.items():
+            adjusted_breakdown[new_channel] = sum(
+                [adjusted_breakdown.pop(old_channel) for old_channel in old_channels]
+            )
 
     return adjusted_breakdown

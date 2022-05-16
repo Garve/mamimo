@@ -1,4 +1,4 @@
-"""Test the LADRegressor."""
+"""Test the linear models."""
 
 import numpy as np
 import pytest
