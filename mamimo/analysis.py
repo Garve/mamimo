@@ -1,13 +1,14 @@
 """Analyze trained marketing mix models."""
 
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
+import sklearn
 
 
 def breakdown(
-    model: Any,
+    model: sklearn.pipeline.Pipeline,
     X: pd.DataFrame,
     y: np.ndarray,
     group_channels: Optional[Dict[str, List[str]]] = None,
@@ -17,7 +18,7 @@ def breakdown(
 
     Parameters
     ----------
-    model : Any
+    model : sklearn.pipeline.Pipeline
         The trained marketing mix model. Should be a pipeline consisting of two steps:
         1. preprocessing (e.g. adstock transformations)
         2. regression via a linear model.
