@@ -154,10 +154,10 @@ ax.legend(
 Wow, that's a lot of channels. Let us group some of them together.
 
 ```python
-group_channels = {
-    'Baseline': [f'month__month_{i}' for i in range(1, 13)] + ['Base', 'trend__trend']
-} # read: 'Baseline consists of the months, base and trend.'
-  # You can add more groups!
+group_channels = {'Baseline': [f'month__month_{i}' for i in range(1, 13)] + ['Base', 'trend__trend']} 
+# read: 'Baseline consists of the months, base and trend.'
+# You can add more groups!
+
 contributions = breakdown(
     tuned_model.best_estimator_,
     X,
