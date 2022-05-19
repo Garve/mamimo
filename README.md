@@ -159,7 +159,7 @@ group_channels = {
 } # read: 'Baseline consists of the months, base and trend.'
   # You can add more groups!
 contributions = breakdown(
-    tuned_new_model.best_estimator_,
+    tuned_model.best_estimator_,
     X,
     y,
     group_channels
