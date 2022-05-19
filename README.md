@@ -1,5 +1,5 @@
 # MaMiMo
-This is a small library that helps you with your everyday **Ma**rketing **Mi**x **Mo**delling. It contains a few saturation functions, carryovers and some utilities for creating with time features. You can also read my article about it [here](https://towardsdatascience.com/a-small-python-library-for-marketing-mix-modeling-mamimo-100f31666e18).
+This is a small library that helps you with your everyday **Ma**rketing **Mi**x **Mo**delling. It contains a few saturation functions, carryovers and some utilities for creating with time features. You can also read my article about it here: [>>>Click<<<](https://towardsdatascience.com/a-small-python-library-for-marketing-mix-modeling-mamimo-100f31666e18).
 
 Give it a try via `pip install mamimo`!
 
