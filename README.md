@@ -94,6 +94,7 @@ This builds a model that does the following:
 ## Training The Model
 We can then hyperparameter tune the model via
 ```python
+from numpy.random import randint, uniform
 from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
 
 tuned_model = RandomizedSearchCV(
