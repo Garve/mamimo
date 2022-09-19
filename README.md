@@ -46,7 +46,12 @@ This adds
 We can now build a final model like this:
 ```python
 from mamimo.time_utils import PowerTrend
+from mamimo.carryover import ExponentialCarryover
+from mamimo.saturation import ExponentialSaturation
+from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 
 cats =  [list(range(1, 13))] # different months, known beforehand
 
