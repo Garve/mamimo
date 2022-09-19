@@ -117,6 +117,8 @@ tuned_model = RandomizedSearchCV(
     random_state=0,
     n_iter=1000, # can take some time, lower number for faster results
 )
+
+tuned_model.fit(X, y)
 ```
 
 You can also use `GridSearch`, Optuna, or other hyperparameter tune methods and packages here, as long as it is compatible to scikit-learn.
