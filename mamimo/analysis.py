@@ -4,11 +4,11 @@ from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-import sklearn
+from sklearn.pipeline import Pipeline
 
 
 def breakdown(
-    model: sklearn.pipeline.Pipeline,
+    model: Pipeline,
     X: pd.DataFrame,
     y: np.ndarray,
     group_channels: Optional[Dict[str, List[str]]] = None,
