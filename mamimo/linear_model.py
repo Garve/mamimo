@@ -18,7 +18,7 @@ from sklearn.utils.validation import (
 
 class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
     """
-    Base class for regressors relying on scipy's minimze method.
+    Base class for regressors relying on scipy's minimize method.
 
     Derive a class from this one and give it the function to be minimized.
 

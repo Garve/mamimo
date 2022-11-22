@@ -78,7 +78,7 @@ class Carryover(_OneToOneFeatureMixin, BaseEstimator, TransformerMixin, ABC):
             Fitted transformer.
 
         """
-        X = self._validate_data(X, dtype=FLOAT_DTYPES)
+        _ = self._validate_data(X, dtype=FLOAT_DTYPES)
 
         self.sliding_window_ = self._get_sliding_window()
         self.sliding_window_ = (
@@ -241,7 +241,7 @@ class ExponentialCarryover(Carryover):
     """
     Smoothes time series data with an exponential window.
 
-    Smooth the columns of an array by applying a convolution with a exponentially
+    Smooth the columns of an array by applying a convolution with an exponentially
     decaying curve. This class can be used for modelling carry over effects in
     marketing mix models.
 
