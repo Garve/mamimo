@@ -7,12 +7,16 @@ from typing import List, Optional
 
 import numpy as np
 from scipy.signal import convolve2d
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.base import BaseEstimator, TransformerMixin, _OneToOneFeatureMixin
 from sklearn.utils import check_array
-from sklearn.utils.validation import _check_feature_names_in, check_is_fitted
+from sklearn.utils.validation import (
+    FLOAT_DTYPES,
+    _check_feature_names_in,
+    check_is_fitted,
+)
 
 
-class Carryover(BaseEstimator, TransformerMixin, ABC):
+class Carryover(_OneToOneFeatureMixin, BaseEstimator, TransformerMixin, ABC):
     """
     Smooth the columns of an array by applying a convolution.
 
@@ -74,8 +78,8 @@ class Carryover(BaseEstimator, TransformerMixin, ABC):
             Fitted transformer.
 
         """
-        X = check_array(X)
-        self._check_n_features(X, reset=True)
+        X = self._validate_data(X, dtype=FLOAT_DTYPES)
+
         self.sliding_window_ = self._get_sliding_window()
         self.sliding_window_ = (
             self.sliding_window_.reshape(-1, 1) / self.sliding_window_.sum()
