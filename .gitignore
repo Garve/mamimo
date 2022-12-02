@@ -3,3 +3,6 @@ __pycache__/
 dist/
 .mypy_cache/
 .pytest_cache/
+.idea/
+.hypothesis/
+docs/
