@@ -7,7 +7,7 @@ from typing import List, Optional
 
 import numpy as np
 from scipy.signal import convolve2d
-from sklearn.base import BaseEstimator, TransformerMixin, _OneToOneFeatureMixin
+from sklearn.base import BaseEstimator, TransformerMixin, OneToOneFeatureMixin
 from sklearn.utils import check_array
 from sklearn.utils.validation import (
     FLOAT_DTYPES,
@@ -16,7 +16,7 @@ from sklearn.utils.validation import (
 )
 
 
-class Carryover(_OneToOneFeatureMixin, BaseEstimator, TransformerMixin, ABC):
+class Carryover(OneToOneFeatureMixin, BaseEstimator, TransformerMixin, ABC):
     """
     Smooth the columns of an array by applying a convolution.
 
