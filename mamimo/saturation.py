@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 import numpy as np
-from sklearn.base import BaseEstimator, TransformerMixin, _OneToOneFeatureMixin
+from sklearn.base import BaseEstimator, TransformerMixin, OneToOneFeatureMixin
 from sklearn.utils.validation import (
     FLOAT_DTYPES,
     _check_feature_names_in,
@@ -15,7 +15,7 @@ from sklearn.utils.validation import (
 )
 
 
-class Saturation(_OneToOneFeatureMixin, BaseEstimator, TransformerMixin, ABC):
+class Saturation(OneToOneFeatureMixin, BaseEstimator, TransformerMixin, ABC):
     """Base class for all saturations, such as Box-Cox, Adbudg, ..."""
 
     def fit(self, X: np.ndarray, y: None = None) -> Saturation:
