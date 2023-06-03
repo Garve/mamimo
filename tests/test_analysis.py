@@ -48,7 +48,7 @@ def create_model():
             ),
             ["Banners"],
         ),
-        (OneHotEncoder(sparse=False), ["month"]),
+        (OneHotEncoder(sparse_output=False), ["month"]),
         (PowerTrend(power=1.2), ["Trend"]),
         (ExponentialCarryover(window=10, strength=0.6), ["special_date"]),
     )
