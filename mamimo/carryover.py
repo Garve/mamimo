@@ -319,8 +319,6 @@ class ExponentialCarryover(Carryover):
             The sliding window.
 
         """
-        sliding_window = self.strength ** (
+        return self.strength ** (
             np.abs(np.arange(self.window) - self.peak) ** self.exponent
         )
-
-        return sliding_window

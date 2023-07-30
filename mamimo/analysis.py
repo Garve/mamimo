@@ -59,7 +59,8 @@ def breakdown(
     if group_channels is not None:
         for new_channel, old_channels in group_channels.items():
             adjusted_breakdown[new_channel] = sum(
-                [adjusted_breakdown.pop(old_channel) for old_channel in old_channels]
+                adjusted_breakdown.pop(old_channel)
+                for old_channel in old_channels
             )
 
     return adjusted_breakdown
