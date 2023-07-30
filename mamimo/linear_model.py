@@ -199,10 +199,7 @@ class BaseScipyMinimizeRegressor(BaseEstimator, RegressorMixin, ABC):
 
         n = X.shape[0]
 
-        if self.copy_X:
-            X_ = X.copy()
-        else:
-            X_ = X
+        X_ = X.copy() if self.copy_X else X
         if self.fit_intercept:
             X_ = np.hstack([X_, np.ones(shape=(n, 1))])
 
